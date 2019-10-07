@@ -7,10 +7,11 @@ def get_conversion_amount(form):
     args= {
         "CurrencyFrom": form.cleaned_data['currency_from'],
         "CurrencyTo": form.cleaned_data['currency_to'],
-        "RateDate": date.today(),
+        "RateDate": date.today().strftime('%m/%d/%y'),
         "Amount": form.cleaned_data['amount']
     }
-    return requests.get(url=URL, params=args).content
+    response = requests.get(url=URL, params=args)
+    return ET.fromstring(response.text).text
 
 def get_currencies():
     URL = "http://currencyconverter.kowabunga.net/converter.asmx/GetCurrencies?"

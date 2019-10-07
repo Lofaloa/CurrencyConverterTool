@@ -16,9 +16,10 @@ def index(request):
     if request.method == 'POST':
         form = ConverterForm(request.POST)
         if form.is_valid():
-            pass
+            result = c.get_conversion_amount(form)
+            context = {'form': form, 'result': result}
     else:
         form = ConverterForm()
-    context = {'form': form}
+        context = {'form': form}
     return render(request, 'converter/index.html', context)
     # return HttpResponse(c.get_currencies())
